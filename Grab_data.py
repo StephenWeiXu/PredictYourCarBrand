@@ -74,7 +74,7 @@ filter_list = carBrandList()
 for ind in range(0, len(car_brand_list)):
     filter_list[ind] = "my " + filter_list[ind]
 
-attributes = ['id_str', 'text', 'lang', 'brand']
+attributes = ['id_str', 'brand', 'text']
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
