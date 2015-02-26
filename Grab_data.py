@@ -70,15 +70,15 @@ def get_label(tweetText, carBrandList):
     return label
 
 car_brand_list = carBrandList()
-extra_feature = ['drive', 'my', 'buy']
-total_list = car_brand_list + extra_feature 
-
+filter_list = carBrandList()
+for ind in range(0, len(car_brand_list)):
+    filter_list[ind] = "my " + filter_list[ind]
 
 attributes = ['id_str', 'text', 'lang', 'brand']
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 twitterStream = Stream(auth, listener())
-twitterStream.filter(track=total_list)
+twitterStream.filter(track=filter_list)
 
 
