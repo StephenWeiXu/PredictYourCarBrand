@@ -14,6 +14,8 @@ access_token = '1356806936-M0YK8ZD2ctd7qPOeaVlwBlJwHgqAjzBBig2DeNS'
 access_token_secret = 'T7hFnK0HGLuPLIC8Enxn4ecv2Ogf0cxDl4mqQ1BsDVSW3'
 
 class listener(StreamListener):
+    
+    num_tweets = 0
 
     def on_data(self, data):
     	try:
@@ -27,22 +29,27 @@ class listener(StreamListener):
             car_label = get_label(raw_tweet['text'], car_brand_list)
 
             if car_label != '':
+                listener.num_tweets += 1
+                print "%d tweets retrieved!" %(listener.num_tweets)
+                if listener.num_tweets > 3000: # Set the number of tweets to be retrieved
+                    print "\nTotal Number of tweets retrieved: ", listener.num_tweets
+                    return False
                 for attribute in attributes:
                     if raw_tweet.get(attribute, None) is not None:
                         spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
 
-                with open ('tweet_processed.csv', 'a') as f_tweet:
+                with open ('tweet_data_all.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
 
         	return True
         except BaseException, e:
         	print 'failed on_data, ', str(e)
-        	time.sleep(5)
+        	time.sleep(1)
 
     def on_error(self, status):
-        print status
+       print status
 
 # Process the tweet text, avoid irrelevant words being misassigned as car brand
 def textProcessing(tweetText):
