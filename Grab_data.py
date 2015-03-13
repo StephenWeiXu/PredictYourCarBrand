@@ -31,7 +31,7 @@ class listener(StreamListener):
             if car_label != '':
                 listener.num_tweets += 1
                 print "%d tweets retrieved!" %(listener.num_tweets)
-                if listener.num_tweets > 3000: # Set the number of tweets to be retrieved
+                if listener.num_tweets > 5000: # Set the number of tweets to be retrieved
                     print "\nTotal Number of tweets retrieved: ", listener.num_tweets
                     return False
                 for attribute in attributes:
