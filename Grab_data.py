@@ -1,5 +1,5 @@
 
-# Using Twitter API for grabing the tweets data from Twitter 
+# Using Twitter API for grabing the tweets data from Twitter
 
 from tweepy import Stream
 from tweepy import OAuthHandler
@@ -14,7 +14,7 @@ access_token = '1356806936-M0YK8ZD2ctd7qPOeaVlwBlJwHgqAjzBBig2DeNS'
 access_token_secret = 'T7hFnK0HGLuPLIC8Enxn4ecv2Ogf0cxDl4mqQ1BsDVSW3'
 
 class listener(StreamListener):
-    
+
     num_tweets = 0
 
     def on_data(self, data):
@@ -23,7 +23,7 @@ class listener(StreamListener):
             raw_tweet = json.loads(data)
             spec_tweet = {}
 
-            if raw_tweet.get('text', None) is None or raw_tweet.get('id_str', None) is None or str(raw_tweet.get('lang')) != 'en':
+            if raw_tweet.get('text', None) is None or raw_tweet.get('user', None) is None or str(raw_tweet.get('lang')) != 'en':
                 return True
             raw_tweet['text'] = textProcessing(raw_tweet['text'])
             car_label = get_label(raw_tweet['text'], car_brand_list)
@@ -35,10 +35,14 @@ class listener(StreamListener):
                     print "\nTotal Number of tweets retrieved: ", listener.num_tweets
                     return False
                 for attribute in attributes:
-                    if raw_tweet.get(attribute, None) is not None:
-                        spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
+                    if 'user_id' == attribute:
+                        if raw_tweet.get('user', None) is not None:
+                            spec_tweet['user_id'] = str(raw_tweet['user']['id_str'].encode('utf-8')).rstrip()
+                    else:
+                        if raw_tweet.get(attribute, None) is not None:
+                            spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
-
+                print spec_tweet
                 with open ('tweet_data_all.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
@@ -81,7 +85,7 @@ filter_list = carBrandList()
 for ind in range(0, len(car_brand_list)):
     filter_list[ind] = "my " + filter_list[ind]
 
-attributes = ['id_str', 'brand', 'text']
+attributes = ['user_id', 'brand', 'text']
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
