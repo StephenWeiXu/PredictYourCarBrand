@@ -32,7 +32,7 @@ class listener(StreamListener):
                 listener.num_tweets += 1
                 print "%d tweets retrieved!" %(listener.num_tweets)
                 if listener.num_tweets > 5000: # Set the number of tweets to be retrieved
-                    print "\nTotal Number of tweets retrieved: ", listener.num_tweets
+                    print "\nTotal Number of tweets retrieved: ", listener.num_tweets-1
                     return False
                 for attribute in attributes:
                     if 'user_id' == attribute:
@@ -42,7 +42,6 @@ class listener(StreamListener):
                         if raw_tweet.get(attribute, None) is not None:
                             spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
-                print spec_tweet
                 with open ('tweet_data_all.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
