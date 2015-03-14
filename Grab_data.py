@@ -1,4 +1,5 @@
 
+# Using Twitter API for grabing the tweets data from Twitter 
 # Using Twitter API for grabing the tweets data from Twitter
 
 from tweepy import Stream
@@ -14,6 +15,8 @@ access_token = '1356806936-M0YK8ZD2ctd7qPOeaVlwBlJwHgqAjzBBig2DeNS'
 access_token_secret = 'T7hFnK0HGLuPLIC8Enxn4ecv2Ogf0cxDl4mqQ1BsDVSW3'
 
 class listener(StreamListener):
+    
+    num_tweets = 0
 
     num_tweets = 0
 
@@ -42,7 +45,7 @@ class listener(StreamListener):
                         if raw_tweet.get(attribute, None) is not None:
                             spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
-                print spec_tweet
+
                 with open ('tweet_data_all.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
