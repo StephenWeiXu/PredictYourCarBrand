@@ -47,8 +47,8 @@ for ind in range(0, len(result_1_2000)):
 		valid_car_label.append(car_label[row[0]-1])
 		valid_user_id.append(user_id[row[0]-1])
 
-print len(valid_user_id)
-print len(valid_car_label)
+#print len(valid_user_id)
+#print len(valid_car_label)
 
 ''' Get unique valid users '''
 unique_user_id = []
@@ -59,13 +59,24 @@ for i in range(0, len(valid_user_id)):
     unique_user_id.append(valid_user_id[i])
     unqiue_car_label.append(valid_car_label[i])
 
-print len(unique_user_id)
-print len(unqiue_car_label)
+#print len(unique_user_id)
+#print len(unqiue_car_label)
 
 ''' Compute the statistics of the final valid results'''
+'''
 brand_list = list(set(unqiue_car_label))
 for brand in brand_list:
-	print brand, unqiue_car_label.count(brand)
+	print brand, unqiue_car_label.count(brand)'''
 
 ''' unique_user_id contains all unqiue and valid user_id, which can be used to retirve their more tweets. 
     unqiue_car_label contains ther corresponding car brand '''
+all_valid_info = []
+for ind in range(0, len(unique_user_id)):
+    all_valid_info.append([unique_user_id[ind], unqiue_car_label[ind]])
+
+print len(all_valid_info) 
+
+with open("valid_user_label.csv", 'w') as fp:
+    csv_writer = csv.writer(fp, delimiter = ',')
+    for item in all_valid_info:
+        csv_writer.writerow(item)
