@@ -37,12 +37,16 @@ class listener(StreamListener):
                 for attribute in attributes:
                     if 'user_id' == attribute:
                         if raw_tweet.get('user', None) is not None:
-                            spec_tweet['user_id'] = str(raw_tweet['user']['id_str'].encode('utf-8')).rstrip()
+                            user_id = raw_tweet['user']['id_str']
+                            if user_id in existing_id:
+                                print 'User ID already existent'
+                                return True
+                            spec_tweet['user_id'] = str(user_id.encode('utf-8')).rstrip()
                     else:
                         if raw_tweet.get(attribute, None) is not None:
                             spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
-                with open ('tweet_data_all.csv', 'a') as f_tweet:
+                with open ('additional_tweet.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
 
@@ -68,10 +72,14 @@ def textProcessing(tweetText):
 def carBrandList():
     f_carBrand = open('car_brand.txt')
     car_brand = f_carBrand.read().lower().splitlines()
+    car_brand = [token for token in car_brand if '#' not in token and len(token) != 0]
     f_carBrand.close()
     return car_brand
 
 def get_label(tweetText, carBrandList):
+    '''
+    infer car brand from the tweet text
+    '''
     label = ''
     tweetText_list = tweetText.lower().split()
     for brand in carBrandList:
@@ -79,11 +87,17 @@ def get_label(tweetText, carBrandList):
             return brand
     return label
 
+# loading the existing user id
+existing_id = []
+with open('tweet_data_all_5000.csv', 'r') as f:
+    id_reader = csv.reader(f, delimiter='|')
+    for row in id_reader:
+        existing_id.append(row[0])
+
 car_brand_list = carBrandList()
 filter_list = carBrandList()
 for ind in range(0, len(car_brand_list)):
     filter_list[ind] = "my " + filter_list[ind]
-
 attributes = ['user_id', 'brand', 'text']
 
 auth = OAuthHandler(consumer_key, consumer_secret)
