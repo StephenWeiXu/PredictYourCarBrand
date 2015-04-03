@@ -8,10 +8,10 @@ import csv
 import json
 import time
 
-consumer_key = 'gvUJ9I8YiQHaw2M0Fcfou2CC3'
-consumer_secret = 'hvzuD9QjrhnuEhZvvw79jvHfApgtW2DfzlPFQauR26TQEE9TxB'
-access_token = '1356806936-M0YK8ZD2ctd7qPOeaVlwBlJwHgqAjzBBig2DeNS'
-access_token_secret = 'T7hFnK0HGLuPLIC8Enxn4ecv2Ogf0cxDl4mqQ1BsDVSW3'
+consumer_key = 'of1Ta5D471yKSSrfKeKrAwfBo'
+consumer_secret = 'DB8bCGltzWiFm5gbfARhtRB3XScwxX5GWf6VZaYbPUI1nFUXf9'
+access_token = '1356806936-q83gBJ56JbdrjWBp39dmmHcusiNQRxCWvjvmtVH'
+access_token_secret = 'GgvR7jsXKeFEHaj9B1sUnzpuApQ5enDd9kH849lKl0ISU'
 
 class listener(StreamListener):
 
@@ -39,14 +39,14 @@ class listener(StreamListener):
                         if raw_tweet.get('user', None) is not None:
                             user_id = raw_tweet['user']['id_str']
                             if user_id in existing_id:
-                                print 'User ID already existent'
+                                #print 'User ID already existent'
                                 return True
                             spec_tweet['user_id'] = str(user_id.encode('utf-8')).rstrip()
                     else:
                         if raw_tweet.get(attribute, None) is not None:
                             spec_tweet[attribute] = str(raw_tweet[attribute].encode('utf-8')).rstrip()
                 spec_tweet['brand'] = car_label
-                with open ('additional_tweet.csv', 'a') as f_tweet:
+                with open ('additional_tweet_wei.csv', 'a') as f_tweet:
                     writer = csv.DictWriter(f_tweet, fieldnames = attributes, delimiter = '|')
                     writer.writerow(spec_tweet)
 
