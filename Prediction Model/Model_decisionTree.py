@@ -1,5 +1,40 @@
 #This is model for decision tree, it read samples and output classification report, confusion matrix, accuracy, decision tree and map from number to label name.
+'''
+If you want to run this file, you need to make some changes in scikit-learn package:
+First, you need to modify fit function of pipeline.py as following:
+    1)Adding parameter i_fold in the function header;
+    2)Adding the following in line150(after calling __pre_tranform__ function):
+            Xt = Xt.toarray() #this is to transform sparse matrix to dense one, which is required by decision tree interface;
+    3)Then add the following right after Xt = Xt.toarray(), which can output decision tree into pdf format:
+            clf = tree.DecisionTreeClassifier()
+            clf = clt.fit(Xt, y)
+            dot_data = StringIO()
+            tree.export_graphviz(clf, out_file = dot_data)
+            graph = pydot.graph_from_dot_data(dot_data.getvalue())
+            graph.write_pdf(str(i_fold) + '.pdf')
+      and in order to make this work, you also need to add the following in the beginning of the pipeline.py:
+            from sklearn import tree
+            from sklearn.external.six import StringIO
+            import pydot
+Second, you need to modify __pre_transform__ function of pipeline.py as following:
+    1)Adding parameter i_fold in the function header(please do remember add it too when calling this function)
+    2)Adding the following right after calling fit_transform(about row 125), which will output map from number to label name:
+             map_feature_name = open(str(i_fold)+'_map_feature_name.txt', 'w')
+             feature_name = transform.get_feature_names()
+             count = 0
+             for item in feature_name:
+                 item = str(item.encode('utf-8')).rstrip()
+                 map_feature_name.write(str(count) + ": " + item + '\n')
+                 count += 1 
+             map_feature_name.close()
+      and in order to make this work, you also need to add the following in the beginning of the pipeline.py:
+            import json
+Third, you need to modify predict function in BaseDecisionTree class in sklearn/tree/tree.py as following:
+    1)Adding X = X.toarray() in the beginning of the function, this is to make X dense.
+      
 
+
+'''
 from sklearn import tree
 from sklearn.externals.six import StringIO
 import pydot 
@@ -28,7 +63,7 @@ def read_data(dir, data, label_number, file_name):
         if 'DS' in item:
             continue
         data_file_name_split = re.split('\.', item)
-        userid = data_file_name_split[0]
+        userid = data_file_namea_split[0]
         label = data_file_name_split[1]
         data_file = open(dir+item, 'r')
         file_name.append(dir+item)
