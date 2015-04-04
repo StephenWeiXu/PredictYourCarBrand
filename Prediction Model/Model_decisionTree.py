@@ -63,7 +63,7 @@ def read_data(dir, data, label_number, file_name):
         if 'DS' in item:
             continue
         data_file_name_split = re.split('\.', item)
-        userid = data_file_namea_split[0]
+        userid = data_file_name_split[0]
         label = data_file_name_split[1]
         data_file = open(dir+item, 'r')
         file_name.append(dir+item)
