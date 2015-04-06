@@ -8,6 +8,8 @@ from sklearn import svm
 from sklearn.grid_search import GridSearchCV
 from sklearn.externals import joblib
 from sklearn import metrics
+import data_preprocess
+import smote
 
 '''this function is going to get the contend and label from the indexed documents 
 the index should be train_index or test_index'''
@@ -38,9 +40,8 @@ file_folder = "Complte Dataset/"
 filenames = os.listdir(file_folder)
 
 '''remove the DS_Store document'''
-for filename in filenames:
-    if "DS" in filename:
-        filenames.remove(filename)
+if ".DS_Store" in filenames:
+    filenames.remove(".DS_Store")
 
 '''get the labels of all documents'''
 doc_num = len(filenames)
@@ -67,6 +68,8 @@ for train_index, test_index in skf:
     train_data = vectorize.fit_transform(train_corpus)
     test_data = vectorize.transform(test_corpus)
     
+    #data_preprocess.printStats(train_label)
+
     '''begin to training the data'''
     cPara_range = [1.0]
     cPara_range = list(np.logspace(-2,2,10)) # release this annotation and kill the previous sentence to run grid search
@@ -76,10 +79,10 @@ for train_index, test_index in skf:
     
     '''save the model'''
     model_tunning.fit(train_data, train_label)
-    joblib.dump(model_tunning, 'training_model_%d.pkl' %(iter_num))
+    #joblib.dump(model_tunning, 'training_model_%d.pkl' %(iter_num))
     
     '''load the model'''
-    model_tunning = joblib.load('training_model_%d.pkl' %(iter_num)) 
+    #model_tunning = joblib.load('training_model_%d.pkl' %(iter_num)) 
     predict_labels = model_tunning.predict(test_data)
 
     print "Classification Report:"
