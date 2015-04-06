@@ -9,7 +9,6 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.externals import joblib
 from sklearn import metrics
 import data_preprocess
-import smote
 
 '''this function is going to get the contend and label from the indexed documents 
 the index should be train_index or test_index'''
@@ -18,10 +17,10 @@ def get_corpus_and_label(index, filenames, file_label, file_folder):
     partial_file_corpus = []
     partial_file_label = np.zeros((doc_num), dtype = np.int)
     for ind in range(0, doc_num):
-        '''get the label'''
+        #get the label
         filename = filenames[index[ind]]
         partial_file_label[ind] = file_label[index[ind]]
-        '''get the contend'''
+        #get the contend
         open_file = open(file_folder + filename, 'r')
         open_file_csv = csv.reader(open_file)
         data_per_sample = ''
@@ -32,18 +31,18 @@ def get_corpus_and_label(index, filenames, file_label, file_folder):
     return partial_file_corpus, partial_file_label
 
 '''main function begin here'''
-'''define the car brand dictionary'''
+#define the car brand dictionary
 car_brands = {'bmw': 0, 'honda': 1, 'jeep': 2, 'audi': 3, 'ford': 4, 'hyundai': 5, 'kia': 6, 'lexus': 7, 'mazda': 8, 'nissan': 9, 'toyota': 10, 'ferrari': 11}
 
-'''define the data path and get the file names of this folder'''
+#define the data path and get the file names of this folder
 file_folder = "Complte Dataset/"
 filenames = os.listdir(file_folder)
 
-'''remove the DS_Store document'''
+#remove the DS_Store document
 if ".DS_Store" in filenames:
     filenames.remove(".DS_Store")
 
-'''get the labels of all documents'''
+#get the labels of all documents
 doc_num = len(filenames)
 file_corpus = []
 train_corpus = []
@@ -55,10 +54,10 @@ for ind in range(0, doc_num):
     label = file_name_split[1]
     file_label[ind] = car_brands[label]
 
-'''divide the all documents into 5 folders'''
+#divide the all documents into 5 folders
 skf = cross_validation.StratifiedKFold(file_label, n_folds = 5)
 
-'''test one folder, while other 4 folders are training folder'''
+#test one folder, while other 4 folders are training folder
 iter_num = 1;
 for train_index, test_index in skf:
     #print("TRAIN:", train_index, "TEST:", test_index)
@@ -72,7 +71,7 @@ for train_index, test_index in skf:
 
     '''begin to training the data'''
     cPara_range = [1.0]
-    cPara_range = list(np.logspace(-2,2,10)) # release this annotation and kill the previous sentence to run grid search
+    #cPara_range = list(np.logspace(-2,2,10)) # release this annotation and kill the previous sentence to run grid search
     parameters = {'C':cPara_range}
     clf = svm.SVC(kernel = 'linear')
     model_tunning = GridSearchCV(clf, param_grid = parameters)
