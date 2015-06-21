@@ -29,11 +29,11 @@ To be able to run our project code, you need to install a list of packages which
 	<li><b>Run Naive Bayes Prediction Model</b><br/>
 	In order to run Model_NaiveBayes.py, firstly you need to install Scikit-Learn and IPython in your computer. To install the sklearn in you computer, please refer to internet resource to see how to install in your type of computer.
 	Then, you can input pip install IPython in your terminal to install IPython. 
-	Once set up, please go to the folder “Naive Bayes”, and run the file Model_NaiveBayes.py by typing python Model_NaieBayes.py in the terminal. The code will output system accuracy, classification report and confusion matrix in your terminal. </li><br/><br/>
+	Once set up, please go to the folder “Naive Bayes”, and run the file Model_NaiveBayes.py by typing python Model_NaieBayes.py in the terminal. The code will output system accuracy, classification report and confusion matrix in your terminal. </li><br/>
 	<li><b>Run Decision Tree Prediction Model</b><br/>
 	In order to run Model_decisionTree.py, please firstly install pydot, input the following commands in your terminal: <br/>
-	<i>pip uninstall pyparsing 
-	pip install -Iv https://pypi.python.org/packages/source/p/pyparsing/pyparsing-1.5.7.tar.gz#md5=9be0fcdcc595199c646ab317c1d9a709
+	<i>pip uninstall pyparsing <br/>
+	pip install -Iv https://pypi.python.org/packages/source/p/pyparsing/pyparsing-1.5.7.tar.gz#md5=9be0fcdcc595199c646ab317c1d9a709<br/>
 	pip install pydot </i><br/><br/>
 	The first two are to ensure you have the right version of pyparsing to use pydot. We need to modify the originally installed scikit learn package to get visualized decision tree and map from vocabulary index to vocabulary (vocabulary will be stored in a list, and in visualized decision tree, there will be an index instead of that vocabulary, e.g.X[1000], we need a map from this index to the real vocabulary). But do not worry about the modification, we have included the modified sklearn package in our directory of “Decision Tree”(which also contains Model_DecisionTree.py). You can directly use it without any other modification, provided you have already installed scikit learn package.<br/><br/>
 	So, just run python Model_DecisionTree.py in your terminal, and the code will output system accuracy, classification report, confusion matrix in your terminal. Besides, the code will also write the visualized decision trees and maps into the local directory.<br/><br/>
@@ -42,7 +42,7 @@ To be able to run our project code, you need to install a list of packages which
 	<li><b>Run SVM Prediction Model</b><br/>
 	To run the SVM prediction model, you should make sure that you have installed the scikit-learn package in your computer. Then go to the folder “SVM”, and run the program by typing:
 	<i>python Model_SVM.py</i> in your terminal, and the code will  the system accuracy, classification report and confusion matrix in the terminal. <br/><br/>
-	<i>Note: To speed up the classification process, we have stored the trained model into the folder “svm_model”, and the Model_SVM.py will only read the saved model and do the test process here.</i>
+	<i><b>Note:</b> To speed up the classification process, we have stored the trained model into the folder “svm_model”, and the Model_SVM.py will only read the saved model and do the test process here.</i>
 	Still, if you want to run the whole training process and test process, there are two tips needed to be noticed:<br/><br/>
 	Because training model needs long time (about 20 minutes), we have save our trained models in the folder ‘svm_model’, hence make sure ‘svm_model’ in the same directory with ‘Model_SVM.py’. And by default,  the ‘Model_SVM.py’  applies the trained models in the ‘svm_model’ folder. If you want to training the model by yourself, you should change the code in ‘Model_SVM.py’ (there is instruction to tell you how to change the code in ‘Model_SVM.py’ to training the model ).<br/><br/>
 	The ‘twokenize.py’ is the tokenizer from CMU. By default, we apply the tokenizer from sklearn rather than CMU Tweets tokenizer. If you want to apply the CMU Tweets tokenizer, you should change the code in ‘Model_SVM.py’ (there is instruction to tell you how to change the code in ‘Model_SVM.py’ to apply the CMU tokenizer ).
