@@ -19,9 +19,12 @@ To be able to run our project code, you need to install a list of packages which
 
 <i>Please make sure you install all these required packages, and we surely will give details and instructions about how to install them. If you still have any problems about installing or running our code, feel free to contact us. </i>
 
-How to run our code
-1. Crawl general tweets from Twitter API given car brands
-To run the program crawling valid twitter users for training, first you need to install tweepy, a python package for twitter crawling. To do this, type pip install tweepy in the terminal. Second, cd to the directory “Grab Tweets” and execute the program by typing the following in the terminal: python Grab_tweets.py. If done correctly, the program should collect tweets and append them to the file Grab_tweets.csv under the same directory. 
+<b>How to run our code</b>
+<ol>
+	<li><b>Crawl general tweets from Twitter API given car brands</b>
+	To run the program crawling valid twitter users for training, first you need to install tweepy, a python package for twitter crawling. To do this, type pip install tweepy in the terminal. Second, cd to the directory “Grab Tweets” and execute the program by typing the following in the terminal: python Grab_tweets.py. If done correctly, the program should collect tweets and append them to the file Grab_tweets.csv under the same directory.
+	</li>
+
 2. Crawl tweets from Twitter API for specific Twitter USER ID
 In order to crawl tweets with a specified user id, you need to download twitter-python from https://github.com/bear/python-twitter.git(you can input the following in your terminal: git clone git://github.com/bear/python-twitter.git), and then there is a directory named “grab tweets with a specified user id”, which contains a directory named “twitter”, that is what we want to run pdata_user.py. Put pdata_user.py, twitter directory and user_id.csv into a directory, type python pdata_user.py in your terminal, you will get a directory named “Complete Datasets” in the current directory. In this “Complete Datasets” directory, there are csv files named as <user id>.<car branch>.csv, which contains crawled tweets of that user, those are our annotate data.
 Note: We have already finished retrieving tweets for each user, and put the complete dataset in the parent directory. This complete dataset is what we use for prediction model.
