@@ -1,19 +1,23 @@
 
-Automatic Prediction of Car Brand Ownership Based on Tweets
+<b>Automatic Prediction of Car Brand Ownership Based on Tweets </b>
 
 
 <b>Summary for packages to be installed </b>
-To be able to run our project code, you need to install a list of packages which are described as follows:
-Python 2.x
-Numpy
-Scipy
-Scikit Learn
-Tweepy
- twitter-python
-Ipython
-pydot
 
-Please make sure you install all these required packages, and we surely will give details and instructions about how to install them. If you still have any problems about installing or running our code, feel free to contact us.
+To be able to run our project code, you need to install a list of packages which are described as follows:
+<ul>
+	<li>Python 2.x</li>
+	<li>Numpy</li>
+	<li>Scipy</li>
+	<li>Scikit Learn</li>
+	<li>Tweepy</li>
+	<li> twitter-python</li>
+	<li>Ipython</li>
+	<li>pydot</li>
+</ul>
+
+
+<i>Please make sure you install all these required packages, and we surely will give details and instructions about how to install them. If you still have any problems about installing or running our code, feel free to contact us. </i>
 
 How to run our code
 1. Crawl general tweets from Twitter API given car brands
